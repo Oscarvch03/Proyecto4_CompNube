@@ -1,0 +1,66 @@
+# Actualizar paquetes
+sudo apt-get update
+sudo apt-get upgrade
+
+
+# Dependencias app.py
+sudo apt install python3-pip
+pip3 --version
+sudo pip3 install pandas
+sudo pip3 install dash
+sudo pip3 install kaggle
+sudo pip3 install gunicorn
+sudo pip3 install Psycopg2
+
+
+# Lanzar app.py
+sudo apt-get install gunicorn
+sudo gunicorn --workers 1 --log-level=debug --timeout 60 --bind :80 app:server
+
+
+# Para instalar Docker
+sudo apt-get remove docker docker-engine docker.io containerd runc
+sudo apt-get update
+sudo apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common -y
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - 
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io -y
+
+
+# Para instalar docker-compose
+sudo curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+
+
+# Lanzar base de datos Postgres en Docker
+cd Proyecto3
+cd database
+sudo docker build -t proyecto3cn_db_img ./
+sudo docker run -d --name proyecto3cn_db_cont -p 5432:5432 proyecto3cn_db_img
+
+
+# Llenar base de datos en Docker
+python3 fill_tables.py
+
+
+# Lanzar aplicacion en Docker
+cd ../app
+sudo docker-compose build
+sudo docker-compose up
+
+
+# Descargar de DockerHub la imagen y lanzar el contenedor de la base de datos
+sudo docker pull oscarvch03/proyecto3cndb
+sudo docker run -d --name proyecto3db -p 5432:5432 oscarvch03/proyecto3cndb
+cd Proyecto3/database
+python3 fill_tables.py
+
+# Descargar de DockerHub la imagen y lanzar el contenedor de la aplicacion
+sudo docker pull oscarvch03/proyecto3cn
+sudo docker run -d --name proyecto3 -p 80:80 oscarvch03/proyecto3cn
+
+# Verificar el lanzamiento de los contenedores
+sudo docker ps
+
+
