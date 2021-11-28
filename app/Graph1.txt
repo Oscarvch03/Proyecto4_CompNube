@@ -1,0 +1,1 @@
+In this first graph, a scatter diagram is presented regarding the players of each country, and their global score according to their real performance in the football context. It is observed that the best score is 93 (scale from 0 to 100) is obtained by a player from Argentina (Leonel Messi), and a decreasing distribution of the countries is presented with respect to said score.

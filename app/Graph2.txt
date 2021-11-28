@@ -1,0 +1,1 @@
+In the previous graph, a circular diagram is observed that represents the distribution of the players with respect to which is their favorite leg to kick the ball. There is a dominant preference of 76.3% to use the right leg, and likewise, 23.7% of the players prefer to use the left leg.
